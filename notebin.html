@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note bin</title>
+</head>
+<body>
+    <input type="text" id="message"><input type="button" value="send" onclick="send()">
+    <input type="button" value="reset" onclick="reset()">
+    <div><span id="chat"></span></div>
+    <script>
+        let n=0;
+        if(localStorage.getItem(n)){
+            n=localStorage.getItem("n")+1;
+        }
+        let appearance="";
+        let message=document.getElementById("message");
+        let chat=document.getElementById("chat");
+        addEventListener("keydown",(e)=>{
+            if(e.keyCode==13&&message.value){send()}
+        });
+        function send(){
+            localStorage.setItem(n,message.value);
+            n++;
+            localStorage.setItem("n",n);
+            message.value="";
+            display();
+        }
+        function display(){
+            chat.innerHTML="";
+            for(let i=0;i<1000;i++){
+                if(localStorage.getItem(i)){
+                    chat.innerHTML+=localStorage.getItem(i)+"<br>";
+                }
+            }
+        }
+        function reset(){
+            localStorage.clear();
+            chat.innerHTML="";
+        }
+        display();
+    </script>
+</body>
+</html>
